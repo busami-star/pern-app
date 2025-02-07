@@ -1,8 +1,13 @@
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config()
 
 const app = express()
+const PORT = process.env.PORT || 5000;
+console.log(PORT)
 
 app.use(express.json())
 app.use(cors())
@@ -14,6 +19,6 @@ app.get("/test", (req, res) => {
     res.send("Hello from the backend")
 })
 
-app.listen(3000,() => {
-    console.log("server started")
+app.listen(PORT,() => {
+    console.log("server started on port " + PORT)
 })
