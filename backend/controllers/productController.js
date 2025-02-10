@@ -22,10 +22,18 @@ export const createProduct = async (req, res) => {
         res.status(400).json({success:false, message:"All fields are required."});
     }
     try{
+        const newProduct = await sql`
+            INSERT INTO products (name, price, image);
+            VALUES (${name},${price},${image})
+            RETURNING *
+        `
+        console.log("new product added", newProduct)
+        res.status(201).json({success:true, data:newProduct[0]});
 
     }
     catch (e) {
-        console.log(e)
+        console.log("error in creating a product", e)
+        res.status(500).json({success:false, error: e});
     }
 }
 export const updateProduct = async (req, res) => {}
